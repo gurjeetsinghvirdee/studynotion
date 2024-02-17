@@ -1,9 +1,10 @@
-import React from 'react'
-
-const constant = () => {
-  return (
-    <div>constant</div>
-  )
+export const ACCOUNT_TYPE = {
+  STUDENT: "Student",
+  INSTRUCTOR: "Instructor",
+  ADMIN: "Admin",
 }
 
-export default constant
+export const COURSE_STATUS = {
+  DRAFT: "Draft",
+  PUBLISHED: "Published",
+}
