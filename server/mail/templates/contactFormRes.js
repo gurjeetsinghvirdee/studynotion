@@ -1,3 +1,14 @@
+/**
+ * Generate HTML email template for contact form confirmation.
+ * @param {string} email - Contact email address.
+ * @param {string} firstname - First name of the contact.
+ * @param {string} lastname - Last name of the contact.
+ * @param {string} message - Message sent by the contact.
+ * @param {string} phoneno - Phone Number of the contact.
+ * @param {string} countrycode - Country Code of the phone number.
+ * @returns {string} - HTML email template with contact details
+ */
+
 exports.contactUsEmail = (
     email,
     firstname,
@@ -81,7 +92,7 @@ exports.contactUsEmail = (
                 <p>Here are the details you provided:</p>
                 <p>Name: ${firstname} ${lastname}</p>
                 <p>Email: ${email}</p>
-                <p>Phone Number: ${phoneno}</p>
+                <p>Phone Number: ${countrycode} ${phoneno}</p>
                 <p>Message: ${message}</p>
                 <p>We appreciate your interest and will get back to you shortly.</p>
             </div>

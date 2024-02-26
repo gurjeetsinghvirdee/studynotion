@@ -1,3 +1,10 @@
+/**
+ * Generate HTML email template for course enrollment confirmation.
+ * @param {string} courseName - Name of the Enrolled Course. 
+ * @param {string} name - Name of the Enrolled User.
+ * @returns {string} - HTML email template with Course Enrollment Details
+ */
+
 exports.courseEnrollmentEmail = (courseName, name) => {
     return `<!DOCTYPE html>
     <html>

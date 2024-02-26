@@ -1,3 +1,9 @@
+/**
+ * Generate HTML email template for OTP Verification
+ * @param {string} otp - One-Time Password for Verification
+ * @returns {string} - HTML email template with OTP details.
+ */
+
 const otpTemplate = (otp) => {
 	return `<!DOCTYPE html>
 	<html>

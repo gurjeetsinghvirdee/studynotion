@@ -1,3 +1,10 @@
+/**
+ * Generate HTML email template for Password Update Confirmation
+ * @param {string} email - Email address of the user.
+ * @param {string} name - Name of the user.
+ * @returns {string} - HTML email template with Password Update Confirmation details.
+ */
+
 exports.passwordUpdated = (email, name) => {
 	return `<!DOCTYPE html>
     <html>

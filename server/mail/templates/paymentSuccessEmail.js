@@ -1,3 +1,12 @@
+/**
+ * Generate HTML email template for payment success confirmation.
+ * @param {string} name - Name of the User.
+ * @param {number} amount - Amount of the Payment.
+ * @param {string} orderId - Order ID associated with the Payment.
+ * @param {string} paymentId - Payment ID associated with the Payment.
+ * @returns {string} - HTML email template with Payment Confirmation details
+ */
+
 exports.paymentSuccessEmail = (name, amount, orderId, paymentId) => {
     return `<!DOCTYPE html>
       <html>
