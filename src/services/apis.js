@@ -1,6 +1,6 @@
 const BASE_URL = "https://localhost:4000/api/v1"
 
-// AUTH ENDPOINTS
+// -----------------------> AUTH ENDPOINTS <-----------------------------
 export const endpoints = {
     SENDOTP_API: BASE_URL + "/auth/sendotp",
     SIGNUP_API: BASE_URL + "/auth/signup",
@@ -9,21 +9,21 @@ export const endpoints = {
     RESETPASSWORDAPI: BASE_URL + "/auth/reset-password",
 }
 
-// PROFILE ENDPOINTS
+// -----------------------> PROFILE ENDPOINTS <------------------------------
 export const profileEndpoints = {
     GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
     GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses",
     GET_INSTRUCTOR_DATA_API: BASE_URL + "/profile/instructorDashboard",
 }
 
-// STUDENTS ENDPOINTS
+// ---------------------------------> STUDENTS ENDPOINTS <---------------------------------------
 export const studentEndpoints = {
     COURSE_PAYMENT_API: BASE_URL + "/payment/capturePayment",
     COURSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
     SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail",
 }
 
-// COURSE ENDPOINTS
+// -----------------------------> COURSE ENDPOINTS <------------------------------
 export const courseEndpoints = {
     GET_ALL_COURSE_API: BASE_URL + "/course/getAllCourses",
     COURSE_DETAILS_API: BASE_URL + "/course/getCourseDetails",
@@ -43,27 +43,27 @@ export const courseEndpoints = {
     CREATE_RATING_API: BASE_URL + "/course/createRating",
 }
 
-// RATINGS AND REVIEWS
+// ----------------> RATINGS AND REVIEWS <-----------------------
 export const ratingEndpoints = {
     REVIEWS_DETAILS_API: BASE_URL + "/course/getReviews",
 }
 
-// CATEGORIES API
+// ------------------> CATEGORIES API <--------------------
 export const categories = {
     CATEGORIES_API: BASE_URL + "/course/showAllCategories",
 }
 
-// CATALOG PAGE DATA
+// ---------------------------------> CATALOG PAGE DATA <----------------------------------------------
 export const catalogData = {
     CATLOGPAGEDATA_API: BASE_URL + "/course/getCategoryPageDetails",
 }
 
-// CONTACT US API
+// -----------------------> CONTACT US API <-----------------------------
 export const contactusEndpoint = {
     CONTACT_US_API: BASE_URL + "/reach/contact",
 }
 
-// SETTINGS PAGE API
+// ------------------------> SETTINGS PAGE API <-------------------------------
 export const settingsEndpoints = {
     UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/updateDisplayPicture",
     UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile",

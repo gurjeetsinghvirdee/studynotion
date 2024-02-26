@@ -1,43 +1,55 @@
-import { toast } from "react-hot-toast";
-
-import { setLoading, setToken } from "../../slices/authSlice";
-
-const {
-  SENDOTP_API,
-  SIGNUP_API,
-  LOGIN_API,
-  RESETPASSTOKEN_API,
-  RESETPASSWORD_API
-} = endpoints
-
+/**
+ * Function to send OTP to the user's email.
+ * @param {string} email - User's email address.
+ * @param {function} navigate - Function to navigate to a different route.
+ * @returns {function} - Asynchronous function dispatching Redux actions.
+ */
 export function sendOtp(email, navigate) {
   return async (dispatch) => {
-    const toastId = toast.loading("Loading...")
-    dispatch(setLoading(true))
+    // Show loading toast while processing
+    const toastId = toast.loading("Loading...");
+    // Set loading state to true
+    dispatch(setLoading(true));
     try {
+      // Call the send OTP API
       const response = await apiConnector("POST", SENDOTP_API, {
         email,
         checkUserPresent: true
-      })
-      console.log("SENDOTP API RESPONSE..........", response)
+      });
+      console.log("SENDOTP API RESPONSE..........", response);
 
-      console.log(response.data.message)
+      console.log(response.data.message);
 
+      // If the API call is not successful, throw an error
       if (!response.data.success) {
-        throw new Error(response.data.message)
+        throw new Error(response.data.message);
       }
-
-      toast.success("OTP Sent Successfully")
-      navigate("/verify-email")
+      // Display success toast and navigate to verify email page
+      toast.success("OTP Sent Successfully");
+      navigate("/verify-email");
     } catch (error) {
-      console.log("SENDOTP API ERROR......", error)
-      toast.error("Could Not Send OTP")
+      // Log error and display error toast
+      console.log("SENDOTP API ERROR......", error);
+      toast.error("Could Not Send OTP");
     }
-    dispatch(setLoading(false))
-    toast.dismiss(toastId)
-  }
+    // Set loading state to false and dismiss loading toast
+    dispatch(setLoading(false));
+    toast.dismiss(toastId);
+  };
 }
 
+/**
+ * Function to sign up a user.
+ * @param {string} accountType - Type of account (e.g., Student, Instructor).
+ * @param {string} firstName - User's first name.
+ * @param {string} lastName - User's last name.
+ * @param {string} email - User's email address.
+ * @param {string} password - User's password.
+ * @param {string} confirmPassword - Confirmation of user's password.
+ * @param {string} otp - One-time password for verification.
+ * @param {function} navigate - Function to navigate to a different route.
+ * @returns {function} - Asynchronous function dispatching Redux actions.
+ */
 export function signUp (
   accountType,
   firstName,
@@ -49,9 +61,12 @@ export function signUp (
   navigate
 ) {
   return async (dispatch) => {
-    const toastId = toast.loading("Loading...")
-    dispatch(setLoading)
+    // Show loading toast while processing
+    const toastId = toast.loading("Loading...");
+    // Set loading state to true
+    dispatch(setLoading);
     try {
+      // Call the signup API
       const response = await apiConnector("POST", SIGNUP_API, {
         accountType,
         firstName,
@@ -60,21 +75,24 @@ export function signUp (
         password,
         confirmPassword,
         otp,
-      })
+      });
+      console.log("SIGNUP_API RESPONSE........", response);
 
-      console.log("SIGNUP_API RESPONSE........", response)
-
+      // If the API call is not successful, throw an error
       if (!response.data.success) {
-        throw new Error(response.data.message)
+        throw new Error(response.data.message);
       }
-      toast.success("Signup Successful")
-      navigate("/login")
+      // Display success toast and navigate to login page
+      toast.success("Signup Successful");
+      navigate("/login");
     } catch (error) {
-      console.log("SIGNUP API ERROR.......", error)
-      toast.error("Signup Failed")
-      navigate("/signup")
+      // Log error and display error toast, then navigate to signup page
+      console.log("SIGNUP API ERROR.......", error);
+      toast.error("Signup Failed");
+      navigate("/signup");
     }
-    dispatch(setLoading(false))
-    toast.dismiss(toastId)
-  }
+    // Set loading state to false and dismiss loading toast
+    dispatch(setLoading(false));
+    toast.dismiss(toastId);
+  };
 }
