@@ -1,20 +1,21 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); // Mongoose library for MongoDB interactions
 
-const courseProgress = new mongoose.Schema({
+// Define schema for course progress tracking
+const courseProgressSchema = new mongoose.Schema({
     courseId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Course",
+        ref: "Course", // Reference to Course model
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        ref: "User", // Reference to User model
     },
     completedVideos: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "SubSection",
+            ref: "SubSection", // Reference to SubSection model
         },
     ],
-})
+});
 
-module.exports = mongoose.model("courseProgress", courseProgress);
+module.exports = mongoose.model("CourseProgress", courseProgressSchema); // Export CourseProgress model

@@ -1,6 +1,8 @@
-const mongoose = require("mongoose");
-const mailSender = require("../utils/mailSender");
-const emailTemplate = require("../mail/templates/emailVerificationTemplate");
+const mongoose = require("mongoose"); // Mongoose library for MongoDB interactions
+const mailSender = require("../utils/mailSender"); // Utility function for sending emails
+const emailTemplate = require("../mail/templates/emailVerificationTemplate"); // Email verification template
+
+// OTP Schema definition
 const OTPSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -13,10 +15,11 @@ const OTPSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 60 * 5,
+        expires: 60 * 5, // Document expires after 5 minutes
     },
 });
 
+// Function to send verification email
 async function sendVerificationEmail(email, otp) {
     try {
         const mailResponse = await mailSender(
@@ -30,6 +33,7 @@ async function sendVerificationEmail(email, otp) {
     }
 }
 
+// Pre-save hook to send verification email when a new OTP document is created
 OTPSchema.pre("save", async function (next) {
     console.log("New document saved to database");
 
@@ -39,6 +43,7 @@ OTPSchema.pre("save", async function (next) {
     next();
 });
 
+// OTP model
 const OTP = mongoose.model("OTP", OTPSchema);
 
 module.exports = OTP;

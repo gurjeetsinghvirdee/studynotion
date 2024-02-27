@@ -1,20 +1,21 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); // Mongoose library for MongoDB interactions
 
+// Define schema for user profiles
 const profileSchema = new mongoose.Schema({
     gender: {
-        type: String,
+        type: String, // Gender of the user
     },
     dateOfBirth: {
-        type: String,
+        type: String, // Date of birth of the user
     },
     about: {
         type: String,
-        trim: true,
+        trim: true, // Trim whitespace from the beginning and end of the string
     },
     contactNumber: {
         type: Number,
-        trim: true,
+        trim: true, // Trim whitespace from the beginning and end of the string
     },
 });
 
-module.exports = mongoose.model("Profile", profileSchema);
+module.exports = mongoose.model("Profile", profileSchema); // Export Profile model
