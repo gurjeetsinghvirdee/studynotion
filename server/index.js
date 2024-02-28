@@ -20,7 +20,7 @@ const contactUsRoute = require("./routes/Contact");
 
 // Connect to database
 const database = require("./config/database");
-database.connect();
+database.connectDB();
 
 // Set port for the server to listen on
 const PORT = process.env.PORT || 4000;

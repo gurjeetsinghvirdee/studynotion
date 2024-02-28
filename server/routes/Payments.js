@@ -6,8 +6,8 @@ const router = express.Router();
 const {
     capturePayment,
     verifyPayment,
-    sendPaymentSuccessMail
-} = require("../controllers/Payments");
+    sendPaymentSuccessEmail
+} = require("../controllers/Payments");;
 
 // Importing authentication middleware
 const {
@@ -24,7 +24,7 @@ router.post("/capturePayment", auth, isStudent, capturePayment);
 router.post("/verifyPayment", auth, isStudent, verifyPayment);
 
 // Route for sending payment success mail
-router.post("/sendPaymentSuccessMail", auth, isStudent, sendPaymentSuccessMail);
+router.post("/sendPaymentSuccessEmail", auth, isStudent, sendPaymentSuccessEmail);
 
 // Exporting the router
 module.exports = router;
