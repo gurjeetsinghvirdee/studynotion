@@ -11,7 +11,6 @@ import {
   setEntireCourseData,
   setTotalNoOfLectures,
 } from "../slices/viewCourseSlice";
-import VideoDetailsSidebar from "../components/core/ViewCourse/VideoDetailsSidebar";
 
 export default function ViewCourse() {
   const { courseId } = useParams()
