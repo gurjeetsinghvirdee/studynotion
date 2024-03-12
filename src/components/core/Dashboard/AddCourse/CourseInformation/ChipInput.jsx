@@ -55,7 +55,45 @@ export default function ChipInput({
 
     return (
         <div className="flex flex-col space-y-2">
-            
+            {/* Label for the chip input */}
+            <label htmlFor={name} className="text-sm text-richblack-5">
+                {label} <sup className="text-pink-200">*</sup>
+            </label>
+            {/* Container for chips and input field */}
+            <div className="flex w-full flex-wrap gap-y-2">
+                {/* Mapping over chips to display them */}
+                {chips.map((chip, index) => (
+                    <div
+                        key={index} 
+                        className="m-1 flex items-center rounded-full bg-yellow-400 px-2 py-1 text-sm text-richblack-5"
+                    >
+                        {chip}
+                        {/* Button to delete chip */}
+                        <button
+                            type="button"
+                            className="ml-2 focus:outline-none"
+                            onClick={() => handleDeleteChip(index)}
+                        >
+                            <MdClose className="text-sm" />
+                        </button>
+                    </div>
+                ))}
+                {/* Input field for adding new chips */}
+                <input 
+                    type="text" 
+                    className="form-style w-full"
+                    id={name}
+                    name={name}
+                    placeholder={placeholder}
+                    onKeyDown={handleKeyDown} 
+                />
+            </div>
+            {/* Error message for required field validation */}
+            {errors[name] && (
+                <span className="ml-2 text-xs tracking-wide text-pink-200">
+                    {label} is required
+                </span>
+            )}
         </div>
     );
-}
+}    
