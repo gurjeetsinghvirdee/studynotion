@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     addCourseDetails,
     editCourseDetails,
-    fetchCourseDetails
+    fetchCourseCategories,
 } from "../../../../../services/operations/courseDetailsAPI";
 import { setCourse, setStep } from "../../../../../slices/courseSlice";
 import { COURSE_STATUS } from "../../../../../utils/constant";
@@ -16,7 +16,6 @@ import IconBtn from "../../../../common/IconBtn";
 import Upload from "../Upload";
 import ChipInput from "./ChipInput";
 import RequirementsField from "./RequirementFiled";
-import { categories } from "../../../../../services/apis";
 
 export default function CourseInformationForm() {
     const {
@@ -35,6 +34,8 @@ export default function CourseInformationForm() {
 
     useEffect(() => {
         const getCategories = async () => {
+            setLoading(true)
+            const categories = await fetchCourseCategories()
             if (categories.length > 0) {
                 setCourseCategories(categories)
             }
@@ -121,6 +122,7 @@ export default function CourseInformationForm() {
             }
             return
         }
+
         const formData = new FormData()
         formData.append("courseName", data.courseTitle)
         formData.append("courseDescription", data.courseShortDesc)
@@ -146,6 +148,7 @@ export default function CourseInformationForm() {
             onSubmit={handleSubmit(onSubmit)} 
             className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6"
         >
+            {/* Course Title */}
             <div className="flex flex-col space-y-2">
                 <label 
                     htmlFor="courseTitle" 
@@ -165,6 +168,7 @@ export default function CourseInformationForm() {
                     </span>
                 )}
             </div>
+            {/* Course Short Description */}
             <div className="flex flex-col space-y-2">
                 <label 
                     htmlFor="courseShortDesc" 
@@ -184,6 +188,7 @@ export default function CourseInformationForm() {
                     </span>
                 )}
             </div>
+            {/* Course Price */}
             <div className="flex flex-col space-y-2">
                 <label htmlFor="coursePrice" className="text-sm text-richblack-5">
                     Course Price <sup className="text-pink-200">*</sup>
@@ -205,9 +210,99 @@ export default function CourseInformationForm() {
                 </div>
                 {errors.coursePrice && (
                     <span className="ml-2 text-xs tracking-wide text-pink-200">
-                        Course Category <sup className="text-pink-200">*</sup>
+                        Course Price is required
                     </span>
                 )}
+            </div>
+            {/* Course Category */}
+            <div className="flex flex-col space-y-2">
+                <label htmlFor="courseCategory" className="text-sm text-richblack-5">
+                    Course Category <sup className="text-pink-200">*</sup>
+                </label>
+                <select 
+                    {...register("courseCategory", { required: true })}
+                    defaultValue=""
+                    id="courseCategory"
+                    className="form-style w-full"
+                >
+                    <option value="" disabled>
+                        Choose a Category
+                    </option>
+                    {!loading &&
+                        courseCategories?.map((category, indx) => (
+                            <option key={indx} value={category?._id}>
+                                {category?.name}
+                            </option>
+                        ))}
+                </select>
+                {errors.courseCategory && (
+                    <span className="ml-2 text-xs tracking-wide text-pink-200">
+                        Course Category is required
+                    </span>
+                )}
+            </div>
+            {/* Course Tags */}
+            <ChipInput 
+                label="Tags"
+                name="courseTags"
+                placeholder="Enter Tags and press Enter"
+                register={register}
+                errors={erros}
+                setValue={setValue}
+                getValues={getValues}
+            />
+            {/* Course Thumbnail Image */}
+            <Upload
+                name="courseImage"
+                label="Course Thumbnail"
+                register={register}
+                setValue={setValue}
+                errors={errors}
+                editData={editCourse ? course?.thumbnail : null}
+            />
+            {/* Benefits of the course */}
+            <div className="flex flex-col space-y-2">
+                <label htmlFor="courseBenefits" className="text-sm text-richblack-5">
+                    Benefits of the course <sup className="text-pink-200">*</sup>
+                </label>
+                <textarea
+                    id="courseBenefits"
+                    placeholder="Enter benefits of the course"
+                    {...register("courseBenefits", { required : true })} 
+                    className="form-style resize-x-none min-h-[130px] w-full"
+                />
+                {errors.courseBenefits && (
+                    <span className="ml-2 text-xs tracking-wide text-pink-200">
+                        Benefits of the course is required
+                    </span>
+                )}
+            </div>
+            {/* Requirements/Instructions */}
+            <RequirementsField 
+                name="courseRequirements"
+                label="Requirements/Instructions"
+                register={register}
+                setValue={setValue}
+                errors={errors}
+                getValues={getValues}
+            />
+            {/* Next Button */}
+            <div className="flex justify-end gap-x-2">
+                {editCourse && (
+                    <button 
+                        onClick={() => dispatch(setStep(2))}
+                        disabled={loading}
+                        className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-8px px-20px font-semibold text-richblack-900`}
+                    >
+                        Continue Without Saving
+                    </button>
+                )}
+                <IconBtn
+                    disabled={loading}
+                    text={!editCourse ? "Next" : "Save Changes"}
+                >
+                    <MdNavigateNext />
+                </IconBtn>
             </div>
         </form>
     )
