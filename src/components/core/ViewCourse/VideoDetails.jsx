@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "video-react/dist/video-react.css"; // Importing CSS styles for Video-React library
-import { useLocation } from 'react-router-dom';
-import { BigPlayButton, Player } from 'video-react'; // Importing components from Video-React library
+import { useLocation } from "react-router-dom";
+import { BigPlayButton, Player } from "video-react"; // Importing components from Video-React library
 
-import { markLectureAsComplete } from '../../../services/operations/courseDetailsAPI'; // Importing API function
-import { updateCompletedLectures } from '../../../slices/viewCourseSlice'; // Importing Redux slice action
-import IconBtn from '../../common/IconBtn'; // Importing custom icon button component
+import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI"; // Importing API function
+import { updateCompletedLectures } from "../../../slices/viewCourseSlice"; // Importing Redux slice action
+import IconBtn from "../../common/IconBtn"; // Importing custom icon button component
 
 const VideoDetails = () => {
   const { courseId, sectionId, subSectionId } = useParams(); // Getting parameters from URL
@@ -17,11 +17,8 @@ const VideoDetails = () => {
   const playerRef = useRef(null); // Ref for video player
   const dispatch = useDispatch(); // Redux dispatch function
   const { token } = useSelector((state) => state.auth); // Getting token from Redux store
-  const {
-    courseSectionData,
-    courseEntireData,
-    completedLectures
-  } = useSelector((state) => state.viewCourse); // Getting data from Redux store
+  const { courseSectionData, courseEntireData, completedLectures } =
+    useSelector((state) => state.viewCourse); // Getting data from Redux store
 
   const [videoData, setVideoData] = useState([]); // State for video data
   const [previewSource, setPreviewSource] = useState(""); // State for preview image source
@@ -30,7 +27,7 @@ const VideoDetails = () => {
 
   // Effect to fetch video data on component mount or when URL changes
   useEffect(() => {
-    ; (async () => {
+    (async () => {
       if (!courseSectionData.length) return; // Return if course section data is not available
       if (!courseId && !sectionId && !subSectionId)
       {
@@ -66,7 +63,7 @@ const VideoDetails = () => {
     {
       return false; // Otherwise, return false
     }
-  }
+  };
 
   // Function to navigate to the next video
   const goToNextVideo = () => {
@@ -74,28 +71,32 @@ const VideoDetails = () => {
       (data) => data._id === sectionId
     );
 
-    const noOfSubSections = courseSectionData[
-      currentSectionIndx].subSection.length;
+    const noOfSubSections =
+      courseSectionData[currentSectionIndx].subSection.length;
 
     const currentSubSectionIndx = courseSectionData[
-      currentSectionIndx].subSection.findIndex((data) => data._id === subSectionId);
+      currentSectionIndx
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (currentSubSectionIndx !== noOfSubSections - 1)
     {
-      const nextSubSectionId = courseSectionData[currentSectionIndx].subSection[
-        currentSubSectionIndx + 1
-      ]._id;
+      const nextSubSectionId =
+        courseSectionData[currentSectionIndx].subSection[
+          currentSubSectionIndx + 1
+        ]._id;
       navigate(
         `/view-course/${courseId}/section/${sectionId}/sub-section/${nextSubSectionId}`
       ); // Navigate to next video within the same section
     } else
     {
       const nextSectionId = courseSectionData[currentSectionIndx + 1]._id;
-      const nextSubSectionId = courseSectionData[currentSectionIndx + 1].subSection[0]._id;
-      navigate(`/view-course/${courseId}/section/${nextSectionId}/sub-section/${nextSubSectionId}`
+      const nextSubSectionId =
+        courseSectionData[currentSectionIndx + 1].subSection[0]._id;
+      navigate(
+        `/view-course/${courseId}/section/${nextSectionId}/sub-section/${nextSubSectionId}`
       ); // Navigate to next section's first video
     }
-  }
+  };
 
   // Function to check if current video is the last one
   const isLastVideo = () => {
@@ -103,9 +104,11 @@ const VideoDetails = () => {
       (data) => data._id === sectionId
     );
 
-    const noOfSubSections = courseSectionData[currentSectionIndx].subSection.length;
+    const noOfSubSections =
+      courseSectionData[currentSectionIndx].subSection.length;
     const currentSubSectionIndx = courseSectionData[
-      currentSectionIndx].subSection.findIndex((data) => data._id === subSectionId);
+      currentSectionIndx
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (
       currentSectionIndx === courseSectionData.length - 1 &&
@@ -117,7 +120,7 @@ const VideoDetails = () => {
     {
       return false; // Otherwise, return false
     }
-  }
+  };
 
   // Function to navigate to the previous video
   const goToPrevVideo = () => {
@@ -126,28 +129,32 @@ const VideoDetails = () => {
     );
 
     const currentSubSectionIndx = courseSectionData[
-      currentSectionIndx].subSection.findIndex((data) => data._id === subSectionId);
+      currentSectionIndx
+    ].subSection.findIndex((data) => data._id === subSectionId);
 
     if (currentSubSectionIndx !== 0)
     {
-      const prevSubSectionId = courseSectionData[currentSectionIndx].subSection[
-        currentSubSectionIndx - 1
-      ]._id;
+      const prevSubSectionId =
+        courseSectionData[currentSectionIndx].subSection[
+          currentSubSectionIndx - 1
+        ]._id;
       navigate(
         `/view-course/${courseId}/section/${sectionId}/sub-section/${prevSubSectionId}`
       ); // Navigate to previous video within the same section
     } else
     {
       const prevSectionId = courseSectionData[currentSectionIndx - 1]._id;
-      const prevSubSectionLength = courseSectionData[currentSectionIndx - 1].subSection.length;
-      const prevSubSectionId = courseSectionData[currentSectionIndx - 1].subSection[
-        prevSubSectionLength - 1
-      ]._id;
+      const prevSubSectionLength =
+        courseSectionData[currentSectionIndx - 1].subSection.length;
+      const prevSubSectionId =
+        courseSectionData[currentSectionIndx - 1].subSection[
+          prevSubSectionLength - 1
+        ]._id;
       navigate(
         `/view-course/${courseId}/section/${prevSectionId}/sub-section/${prevSubSectionId}`
       ); // Navigate to previous section's last video
     }
-  }
+  };
 
   // Function to handle marking lecture as complete
   const handleLectureCompletion = async () => {
@@ -163,7 +170,7 @@ const VideoDetails = () => {
       dispatch(updateCompletedLectures(subSectionId));
     }
     setLoading(false); // Set loading state to false
-  }
+  };
 
   // Component rendering and logic
   return (
@@ -187,7 +194,8 @@ const VideoDetails = () => {
             <div
               style={{
                 // Styling for overlay gradient
-                backgroundImage: "linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1))",
+                backgroundImage:
+                  "linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1))",
               }}
               className="full absolute inset-0 z-[100] grid h-full place-content-center font-inter"
             >
@@ -235,10 +243,12 @@ const VideoDetails = () => {
           )}
         </Player>
       )}
-      <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1> {/* Render video title */}
-      <p className="pt-2 pb-6">{videoData?.description}</p> {/* Render video description */}
+      <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>{" "}
+      {/* Render video title */}
+      <p className="pt-2 pb-6">{videoData?.description}</p>{" "}
+      {/* Render video description */}
     </div>
   );
-}
+};
 
-export default VideoDetails
+export default VideoDetails;
